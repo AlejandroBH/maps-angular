@@ -80,7 +80,7 @@ export class MarkersPageComponent implements AfterViewInit {
 
     // this.markers.set([newMarker, ...this.markers()]);
     this.markers.update((markers) => [newMarker, ...markers]);
-    console.log(this.markers());
+    // console.log(this.markers());
   }
 
   flyToMarker(lngLat: LngLatLike) {
@@ -89,5 +89,13 @@ export class MarkersPageComponent implements AfterViewInit {
     this.map()?.flyTo({
       center: lngLat,
     });
+  }
+
+  deleteMarker(marker: Marker) {
+    if (!this.map) return;
+    const map = this.map()!;
+
+    marker.mapboxMarker.remove();
+    this.markers.set(this.markers().filter((m) => m.id !== marker.id));
   }
 }
